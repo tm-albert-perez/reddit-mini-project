@@ -1,0 +1,50 @@
+version: "3.7"
+
+services:
+  # This service runs postgres DB for dagster, This database stays between sessions
+  postgres:
+    image: postgres:14.1-alpine
+    restart: always
+    container_name: docker_postgresql
+    environment:
+      POSTGRES_USER: ${LOCAL_POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${LOCAL_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${LOCAL_POSTGRES_DBNAME}
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  # This service runs dagit, which loads the pipelines from the user code container.
+  dagster-dagit:
+    image: dagster/dagit
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    entrypoint:
+      - dagit
+      - -h
+      - "0.0.0.0"
+      - -p
+      - "3000"
+      - -w
+      - workspace.yaml
+    container_name: dagster-dagit
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+    restart: always
+    environment:
+      DAGSTER_POSTGRES_HOSTNAME: "docker_postgresql"
+      DAGSTER_POSTGRES_USERNAME: ${LOCAL_POSTGRES_USERNAME}
+      DAGSTER_POSTGRES_PASSWORD: ${LOCAL_POSTGRES_PASSWORD}
+      DAGSTER_POSTGRES_DB_NAME: ${LOCAL_POSTGRES_DBNAME}
+    env_file:
+      - docker/dagster.env
+    depends_on:
+      - postgres
+
+volumes:
+  db:
+    driver: local

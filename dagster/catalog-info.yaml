@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: dwt-dagster-template
+  annotations:
+    github.com/project-slug: thinkingmachines/dwt-dagster-template
+spec:
+  type: other
+  lifecycle: unknown
+  owner: dpd-des
