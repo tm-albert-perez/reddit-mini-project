@@ -1,0 +1,23 @@
+#-------------------------dwt-dagster-template-------------------------
+# Dagster development
+export DAGSTER_HOME=
+
+# Change to Prod or Dev
+export MODE=dev
+
+# GCP
+export GOOGLE_APPLICATION_CREDENTIALS=
+export GCP_PROJECT=
+export DEV_GCS_BUCKET=
+export PROD_GCS_BUCKET=
+
+#Local-Dagster-Docker
+export LOCAL_POSTGRES_USERNAME=username
+export LOCAL_POSTGRES_PASSWORD=password
+export LOCAL_POSTGRES_DBNAME=dagster
+
+# Reddit 
+export REDDIT_CLIENT_ID=
+export REDDIT_CLIENT_SECRET=
+export REDDIT_USER_AGENT=
+export SQLITE_DB_PATH=
