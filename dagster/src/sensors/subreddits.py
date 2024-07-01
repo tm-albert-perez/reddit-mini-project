@@ -21,7 +21,6 @@ def adhoc_request_sensor(context: SensorEvaluationContext):
 
             current_state[filename] = last_modified
 
-            # if the file is new or has been modified since the last run, add it to the request queue
             if (
                 filename not in previous_state
                 or previous_state[filename] != last_modified
@@ -33,7 +32,9 @@ def adhoc_request_sensor(context: SensorEvaluationContext):
                         RunRequest(
                             run_key=f"subreddit_{filename}_{last_modified}",
                             run_config={
-                                "ops": {"subreddit": {"config": {**request_config}}}
+                                "ops": {
+                                    "subreddits_raw": {"config": {**request_config}}
+                                }
                             },
                         )
                     )

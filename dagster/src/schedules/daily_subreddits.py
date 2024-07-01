@@ -24,5 +24,5 @@ def daily_subreddits_schedule(context: SensorEvaluationContext):
         request_config = json.load(f)
         return RunRequest(
             run_key="subreddit_favorites",
-            run_config={"ops": {"subreddit": {"config": {**request_config}}}},
+            run_config={"ops": {"subreddits_raw": {"config": {**request_config}}}},
         )
